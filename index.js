@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
-const PORT = 3001
 
 app.use(cors())
 app.use(express.json())
@@ -75,7 +74,7 @@ const generateId = () => {
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
-
+  
   if (!body || !body.name || !body.number) {
     return response.status(400).json({
       error: 'content missing'
@@ -107,6 +106,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-  console.log("listening on port 3001");
+  console.log(`Server listening on port ${PORT}`);
 })

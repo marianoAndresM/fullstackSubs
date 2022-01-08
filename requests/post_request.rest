@@ -1,12 +1,20 @@
-POST https://fast-cove-37716.herokuapp.com/api/persons/
+# POST https://fast-cove-37716.herokuapp.com/api/persons/
+POST http://localhost:3001/api/persons/
 Content-Type: application/json
 
 {
-  "name": "Mariano Andres",
+  "name": "Mariano",
   "number": "5555-1234"
 }
 
+###
+DELETE http://localhost:3001/api/persons/61d88a759653ec16ce6986f2
 
 ###
-DELETE https://fast-cove-37716.herokuapp.com/api/persons/5
+PUT http://localhost:3001/api/persons/61d838d16d65e69614bebfff 
 
+{
+  "name": "Toby",
+  "number": "444444",
+  "id": "61d838d16d65e69614bebfff"
+}

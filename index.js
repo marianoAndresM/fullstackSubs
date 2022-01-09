@@ -10,25 +10,25 @@ app.use(express.json())
 app.use(express.static('build'))
 
 let persons = [
-  { 
-    "id": 1,
-    "name": "Arto Hellas", 
-    "number": "040-123456"
+  {
+    'id': 1,
+    'name': 'Arto Hellas',
+    'number': '040-123456'
   },
-  { 
-    "id": 2,
-    "name": "Ada Lovelace", 
-    "number": "39-44-5323523"
+  {
+    'id': 2,
+    'name': 'Ada Lovelace',
+    'number': '39-44-5323523'
   },
-  { 
-    "id": 3,
-    "name": "Dan Abramov", 
-    "number": "12-43-234345"
+  {
+    'id': 3,
+    'name': 'Dan Abramov',
+    'number': '12-43-234345'
   },
-  { 
-    "id": 4,
-    "name": "Mary Poppendieck", 
-    "number": "39-23-6423122"
+  {
+    'id': 4,
+    'name': 'Mary Poppendieck',
+    'number': '39-23-6423122'
   }
 ]
 
@@ -40,7 +40,7 @@ morgan.token('person', function getInfo(request) {
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :person'))
 
 app.get('/', (request, response) => {
-  response.send("This is the homepage")
+  response.send('This is the homepage')
 })
 
 app.get('/info', (request, response) => {
@@ -59,10 +59,10 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
-  .then(person => {
-    response.json(person)
-  })
-  .catch(error => next(error))
+    .then(person => {
+      response.json(person)
+    })
+    .catch(error => next(error))
 
   // const id = Number(request.params.id)
   // const person = persons.find(person => person.id === id)
@@ -74,12 +74,12 @@ app.get('/api/persons/:id', (request, response, next) => {
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
-  console.log(request.body);
+  console.log(request.body)
   Person.findByIdAndRemove(request.params.id)
-  .then(result => {
-    response.status(204).end()
-  })
-  .catch(err => next(err))
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(err => next(err))
 })
 
 // const generateId = () => {
@@ -100,18 +100,18 @@ app.post('/api/persons', (request, response, next) => {
   })
   newPerson.save()
     .then(savedPerson => {
-      console.log("saved")
+      console.log('saved')
       response.json(savedPerson)
     })
     .catch(error => next(error))
-  
+
   // if (!body || !body.name || !body.number) {
   //   return response.status(400).json({
   //     error: 'content missing'
   //   })
   // } else {
   //   const newName = body.name
-    
+
   //   if  (persons.find((person) => person.name === newName)) {
   //     return response.status(400).json({
   //       error: "name must be unique"
@@ -120,7 +120,7 @@ app.post('/api/persons', (request, response, next) => {
   //     const newPerson = {
   //       id: generateId(),
   //       name: newName,
-  //       number: body.number 
+  //       number: body.number
   //     }
   //     persons = persons.concat(newPerson)
   //     response.json(newPerson);
@@ -136,14 +136,14 @@ app.put('/api/persons/:id', (request, response, next) => {
     name: body.name,
     number: body.number,
     id: body.id
-  } 
+  }
 
-  Person.findByIdAndUpdate(request.params.id, person, { new: true}) 
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
     .catch(error => next(error))
-}) 
+})
 
 
 const unknownEndpoint = (request, response) => {
@@ -154,14 +154,14 @@ app.use(unknownEndpoint)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server listening on port ${PORT}`)
 })
 
 const errorHandler = (error, request, response, next) => {
-  console.log(error.message);
+  console.log(error.message)
 
   if (error.name === 'CastError') {
-    return response.status(404).send({ error: 'malformatted id'})
+    return response.status(404).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   }
@@ -169,4 +169,4 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-app.use(errorHandler)  
+app.use(errorHandler)
